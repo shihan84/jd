@@ -25,26 +25,42 @@ This project provides a web-based dashboard for clients to monitor their Flusson
 
 ### 3. Backend Setup
 
-1.  Go to the **Website** section in aaPanel and click **Add Site**.
-2.  Select **Python project** from the dropdown menu.
-3.  Fill in your domain name.
-4.  Set the project path to `/www/wwwroot/yourdomain.com`.
-5.  Select the Python version (e.g., 3.10).
-6.  Click **Submit**.
+1.  **Install Python via Python Manager:**
+    *   In aaPanel, go to the **App Store**.
+    *   Find and install **Python Manager** (e.g., v2.5).
+    *   Open Python Manager and install a recent version of Python, such as **3.10**. This project requires Python 3.7+.
 
-7.  Connect to your server via SSH or use the **Terminal** feature in aaPanel.
-8.  Navigate to your project directory: `cd /www/wwwroot/yourdomain.com`
-9.  Clone this repository into the directory.
-10. Create a virtual environment: `python3 -m venv venv`
-11. Activate the virtual environment: `source venv/bin/activate`
-12. Install the required Python packages: `pip install -r backend/requirements.txt`
-13. Create a `.env` file in the project root by copying `.env.example`.
-14. Edit the `.env` file with your database credentials and a strong secret key.
-    ```
-    DATABASE_URL=mysql+mysqlconnector://your_db_user:your_db_password@127.0.0.1:3306/your_db_name
-    SECRET_KEY=your_strong_secret_key
-    ```
-15. In the aaPanel **Website** settings for your project, set the entry point to `backend/main.py` and the startup module to `uvicorn`.
+2.  **Create the Python Project Site:**
+    *   Go to the **Website** section and click **Add Site**.
+    *   Select **Python project** from the dropdown menu.
+    *   Fill in your domain name.
+    *   For the **Project path**, select the directory that was just created (e.g., `/www/wwwroot/your_domain`).
+    *   For **Python version**, select the version you installed via Python Manager (e.g., 3.10).
+    *   Click **Submit**. This will also create a virtual environment for you.
+
+3.  **Deploy the Code:**
+    *   Connect to your server via SSH or use the **Terminal** feature in aaPanel.
+    *   Navigate to your project directory: `cd /www/wwwroot/your_domain`
+    *   Remove any default files created by aaPanel: `rm -f *.py requirements.txt`
+    *   Clone this repository's contents into the current directory: `git clone https://github.com/shihan84/jd.git .`
+    *   Activate the virtual environment created by aaPanel: `source venv/bin/activate`
+    *   Install the required Python packages: `pip install -r backend/requirements.txt`
+
+4.  **Configure Environment:**
+    *   Create a `.env` file in the project root (`/www/wwwroot/your_domain`) by copying `.env.example`.
+    *   Edit the `.env` file with your database credentials and a strong secret key.
+        ```
+        DATABASE_URL=mysql+mysqlconnector://your_db_user:your_db_password@127.0.0.1:3306/your_db_name
+        SECRET_KEY=your_strong_secret_key
+        ```
+
+5.  **Configure aaPanel Project:**
+    *   Go back to the **Website** settings for your project in aaPanel.
+    *   Set the **Run directory** to `/www/wwwroot/your_domain`.
+    *   Set the **Startup file/directory** to `backend/main.py`.
+    *   Set the **Startup function** to `app`.
+    *   Save the settings and restart the Python project.
+
 
 ### 4. Frontend Setup
 
@@ -65,6 +81,7 @@ This project provides a web-based dashboard for clients to monitor their Flusson
 5.  Set the **Period** to run as often as you need (e.g., every hour).
 6.  In the **Script content** box, add the command to run the usage collector script:
     ```bash
-    /www/wwwroot/yourdomain.com/venv/bin/python /www/wwwroot/yourdomain.com/backend/app/services/usage_collector.py
+    /www/wwwroot/your_domain/venv/bin/python /www/wwwroot/your_domain/backend/app/services/usage_collector.py
     ```
+
 7.  Click **Add Task**.
